@@ -2,7 +2,7 @@
 
 A fully-automatic moderately-opinionated way to install [NixOS](https://nixos.org/).
 
-**WARNING: Booting this ISO is intended to wipe a disk on the system. DO NOT plug it into any device that has important data.***
+**WARNING: Booting this ISO is intended to wipe a disk on the system. DO NOT plug it into any device that has important data.**
 
 The logic is simple, NixOS configuration will completely describe a system, so the previous system isn't very important. Therefore the goal of this installer is to set up a NixOS system that is provisioned just enough that you can install whatever you like.
 
