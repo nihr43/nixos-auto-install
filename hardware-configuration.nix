@@ -8,6 +8,11 @@
 		fsType = "vfat";
 	};
 
+	boot.initrd.availableKernelModules = [
+		"nvme"
+		"xhci_pci"
+	];
+
 	boot.initrd.luks.devices.root = {
 		device = "/dev/disk/by-label/root";
 
