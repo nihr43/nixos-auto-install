@@ -17,6 +17,7 @@
 					set -eux
 
 					dev=/dev/sda
+					[ -b /dev/nvme0n1 ] && dev=/dev/nvme0n1
 					[ -b /dev/vda ] && dev=/dev/vda
 
 					${utillinux}/bin/sfdisk --wipe=always $dev <<-END
@@ -25,14 +26,16 @@
 						name=BOOT, size=512MiB, type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B
 						name=NIXOS
 					END
-					mkfs.fat -F 32 -n boot ''${dev}1
+					mkfs.fat -F 32 -n boot /dev/disk/by-partlabel/BOOT
 
-					${cryptsetup}/bin/cryptsetup luksFormat --type=luks2 --label=root ''${dev}2 /dev/zero --keyfile-size=1
-					${cryptsetup}/bin/cryptsetup luksOpen ''${dev}2 root --key-file=/dev/zero --keyfile-size=1
+					sync
+
+					${cryptsetup}/bin/cryptsetup luksFormat --type=luks2 --label=root /dev/disk/by-partlabel/NIXOS /dev/zero --keyfile-size=1
+					${cryptsetup}/bin/cryptsetup luksOpen /dev/disk/by-partlabel/NIXOS root --key-file=/dev/zero --keyfile-size=1
 					mkfs.ext4 -L nixos /dev/mapper/root
 
 					sync
-					sleep 10 # Allow /dev/dis/by-label names to appear.
+					sleep 10 # Allow /dev/disk/by-label names to appear.
 
 					mount /dev/mapper/root /mnt
 

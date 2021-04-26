@@ -20,6 +20,15 @@ Tip: An entry is added to the shell history with a command to view the installer
 
 **WARNING: With a simple password like this you should not expose the system to the internet. If you need to export it to the internet consider removing the `hashedPassword` and setting [`users.users.root.openssh.authorizedKeys.keys`](https://search.nixos.org/options?show=users.users.%3Cname%3F%3E.openssh.authorizedKeys.keys&query=users.users%20openssh&sort=alpha_asc&channel=unstable) and building your own image.
 
+## Disk
+
+The installer picks a disk to install the OS on. It has a search list to find the correct device. If your device name isn't on the list you can symlink to `/dev/vda` which is the highest priority device on the list. For example:
+
+```sh
+sudo ln -s /dev/vda nvme0n1
+sudo systemctl restart install
+```
+
 ## Disk Encryption
 
 The installer sets up LUKS disk encryption of the root partition. (`/boot` is unencrypted.) However the password is set to a single null byte and is set to automatically decrypt the disk. This already has the benifit that it is easy to wipe your disk by removing the key, however if you want to protect your data you should set your own key. Instructions to do this are in [`/etc/nixos/hardware-configuration.nix`](hardware-configuration.nix). The command there will let you set your own password however you can also consider [other options supported by NixOS](https://search.nixos.org/options?query=boot.initrd.luks.devices&sort=alpha_asc&channel=unstable) such as a [keyfile](https://search.nixos.org/options?show=boot.initrd.luks.devices.%3Cname%3F%3E.keyFile&query=boot.initrd.luks.devices%20keyFile&sort=alpha_asc&channel=unstable) or [HSM](https://search.nixos.org/options?show=boot.initrd.luks.devices.%3Cname%3F%3E.keyFile&query=boot.initrd.luks.devices%20yubikey&sort=alpha_asc&channel=unstable).
