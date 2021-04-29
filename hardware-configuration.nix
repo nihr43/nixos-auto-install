@@ -20,7 +20,8 @@
 		allowDiscards = true;
 
 		# Set your own key with:
-		# cryptsetup luksChangekey /dev/disk/by-label/root --key-file=/dev/zero --key-file-size=1
+		# cryptsetup luksChangeKey /dev/disk/by-label/root --key-file=/dev/zero --keyfile-size=1
+		# You can then delete the rest of this block.
 		keyFile = "/dev/zero";
 		keyFileSize = 1;
 
