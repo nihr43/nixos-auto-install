@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, lib, pkgs, ... }: {
 	imports = [
 		#installer-only ./hardware-configuration.nix
 	];
@@ -18,7 +18,7 @@
 	users.mutableUsers = false;
 	users.users.root = {
 		# Password is "linux"
-		hashedPassword = "$6$7IKExnDde920x.YH$ggegnnKJYdmg1Wt33fxuPpM.MmIaX32LXVyjL8ed7ohT385lKotFGzRpitncQ3pd9Lci1QCFGRn2tVJGxkFAm0";
+		hashedPassword = lib.mkForce "$6$7IKExnDde920x.YH$ggegnnKJYdmg1Wt33fxuPpM.MmIaX32LXVyjL8ed7ohT385lKotFGzRpitncQ3pd9Lci1QCFGRn2tVJGxkFAm0";
 	};
 
 	services.avahi = {
