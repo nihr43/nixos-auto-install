@@ -16,6 +16,15 @@
 
 					set -eux
 
+					wait-for() {
+						for _ in seq 10; do
+							if $@; then
+								break
+							fi
+							sleep 1
+						done
+					}
+
 					dev=/dev/sda
 					[ -b /dev/nvme0n1 ] && dev=/dev/nvme0n1
 					[ -b /dev/vda ] && dev=/dev/vda
@@ -29,7 +38,11 @@
 					mkfs.fat -F 32 -n boot /dev/disk/by-partlabel/BOOT
 
 					sync
+					wait-for [ -b /dev/disk/by-partlabel/BOOT ]
 
+					wait-for mkfs.fat -F 32 -n boot /dev/disk/by-partlabel/BOOT
+
+					wait-for [ -b /dev/disk/by-partlabel/NIXOS ]
 					${cryptsetup}/bin/cryptsetup luksFormat --type=luks2 --label=root /dev/disk/by-partlabel/NIXOS /dev/zero --keyfile-size=1
 					${cryptsetup}/bin/cryptsetup luksOpen /dev/disk/by-partlabel/NIXOS root --key-file=/dev/zero --keyfile-size=1
 					mkfs.ext4 -L nixos /dev/mapper/root
@@ -40,7 +53,7 @@
 					mount /dev/mapper/root /mnt
 
 					mkdir /mnt/boot
-					mount /dev/disk/by-label/boot /mnt/boot
+					wait-for mount /dev/disk/by-label/boot /mnt/boot
 
 					install -D ${./configuration.nix} /mnt/etc/nixos/configuration.nix
 					install -D ${./hardware-configuration.nix} /mnt/etc/nixos/hardware-configuration.nix
