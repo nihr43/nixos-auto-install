@@ -48,8 +48,6 @@
 					mkfs.ext4 -L nixos /dev/mapper/root
 
 					sync
-					sleep 10 # Allow /dev/disk/by-label names to appear.
-
 					mount /dev/mapper/root /mnt
 
 					mkdir /mnt/boot
