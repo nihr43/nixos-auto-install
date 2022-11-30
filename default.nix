@@ -1,5 +1,8 @@
+{
+	system ? "x86_64-linux",
+}:
 (import <nixpkgs/nixos/lib/eval-config.nix> {
-	system = "x86_64-linux";
+	inherit system;
 	modules = [
 		<nixpkgs/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix>
 		./configuration.nix
@@ -60,7 +63,7 @@
 
 					${config.system.build.nixos-install}/bin/nixos-install \
 						--system ${(import <nixpkgs/nixos/lib/eval-config.nix> {
-							system = "x86_64-linux";
+							inherit system;
 							modules = [
 								./configuration.nix
 								./hardware-configuration.nix
