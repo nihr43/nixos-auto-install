@@ -45,7 +45,7 @@ I have split the configuration into two files as I like to have high-level gener
 
 ## /etc/nixos/hardware-configuration.nix
 
-[`/etc/nixos/hardware-configuration.nix`](hardware-configuration.nix) contains the filesystem configuration as well as `hardware.enableAllFirmware = true` so that your device likely has all of the drivers you need. You should tweak the encryption settings as specified in the [Disk Encryption](#disk-encryption) section and if you want a leaner system you can replace the `enableAllFirmware` with configuration specific to your device.
+[`/etc/nixos/hardware-configuration.nix`](hardware-configuration.nix) contains the filesystem configuration. You can als set `hardware.enableAllFirmware = true` if your device needs non-distributable drivers. You should tweak the encryption settings as specified in the [Disk Encryption](#disk-encryption) section.
 
 ## Building
 

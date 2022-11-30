@@ -1,5 +1,5 @@
 { config, pkgs, ... }: {
-	hardware.enableAllFirmware = true;
+	hardware.enableAllFirmware = false;
 
 	boot.loader.systemd-boot.enable = true;
 

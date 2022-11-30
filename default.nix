@@ -4,7 +4,7 @@
 		<nixpkgs/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix>
 		./configuration.nix
 		({ config, pkgs, lib, ... }: {
-			hardware.enableAllFirmware = true;
+			hardware.enableAllFirmware = false;
 
 			systemd.services.install = {
 				description = "Bootstrap a NixOS installation";
