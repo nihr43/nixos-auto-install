@@ -1,5 +1,7 @@
 { config, lib, pkgs, ... }: {
 	imports = [
+		<nixpkgs/nixos/modules/profiles/all-hardware.nix>
+		<nixpkgs/nixos/modules/profiles/base.nix>
 		#installer-only ./hardware-configuration.nix
 	];
 
@@ -13,7 +15,7 @@
 	networking.hostName = "install";
 
 	services.openssh.enable = true;
-	services.openssh.permitRootLogin = "yes";
+	services.openssh.settings.PermitRootLogin = "yes";
 
 	users.mutableUsers = false;
 	users.users.root = {
@@ -30,6 +32,7 @@
 	};
 
 	environment.systemPackages = with pkgs; [
+		coreutils
 		curl
 		file
 		git

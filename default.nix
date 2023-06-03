@@ -7,8 +7,6 @@
 		<nixpkgs/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix>
 		./configuration.nix
 		({ config, pkgs, lib, ... }: {
-			hardware.enableAllFirmware = false;
-
 			systemd.services.install = {
 				description = "Bootstrap a NixOS installation";
 				wantedBy = [ "multi-user.target" ];
