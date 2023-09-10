@@ -14,59 +14,18 @@
 				path = [ "/run/current-system/sw/" ];
 				script = with pkgs; ''
 					echo 'journalctl -fb -n100 -uinstall' >>~nixos/.bash_history
-
 					set -eux
-
-					wait-for() {
-						for _ in seq 10; do
-							if $@; then
-								break
-							fi
-							sleep 1
-						done
-					}
-
-					dev=/dev/sda
-					[ -b /dev/nvme0n1 ] && dev=/dev/nvme0n1
-					[ -b /dev/vda ] && dev=/dev/vda
-
-					${utillinux}/bin/sfdisk --wipe=always $dev <<-END
-						label: gpt
-
-						name=BOOT, size=512MiB, type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B
-						name=NIXOS
-					END
-					mkfs.fat -F 32 -n boot /dev/disk/by-partlabel/BOOT
-
-					sync
-					wait-for [ -b /dev/disk/by-partlabel/BOOT ]
-
-					wait-for mkfs.fat -F 32 -n boot /dev/disk/by-partlabel/BOOT
-
-					wait-for [ -b /dev/disk/by-partlabel/NIXOS ]
-					${cryptsetup}/bin/cryptsetup luksFormat --type=luks2 --label=root /dev/disk/by-partlabel/NIXOS /dev/zero --keyfile-size=1
-					${cryptsetup}/bin/cryptsetup luksOpen /dev/disk/by-partlabel/NIXOS root --key-file=/dev/zero --keyfile-size=1
-					mkfs.ext4 -L nixos /dev/mapper/root
-
-					sync
-					mount /dev/mapper/root /mnt
-
-					mkdir /mnt/boot
-					wait-for mount /dev/disk/by-label/boot /mnt/boot
-
+					wipefs -a /dev/sda
+					parted /dev/sda -- mklabel msdos
+					parted /dev/sda -- mkpart primary 1MB 100%
+					parted /dev/sda -- set 1 boot on
+					mkfs.ext4 -L nixos /dev/sda1
+					mount /dev/disk/by-label/nixos /mnt
 					install -D ${./configuration.nix} /mnt/etc/nixos/configuration.nix
 					install -D ${./hardware-configuration.nix} /mnt/etc/nixos/hardware-configuration.nix
-
 					sed -i -E 's/(\w*)#installer-only /\1/' /mnt/etc/nixos/*
 
 					${config.system.build.nixos-install}/bin/nixos-install \
-						--system ${(import <nixpkgs/nixos/lib/eval-config.nix> {
-							inherit system;
-							modules = [
-								./configuration.nix
-								./hardware-configuration.nix
-							];
-						}).config.system.build.toplevel} \
 						--no-root-passwd \
 						--cores 0
 
