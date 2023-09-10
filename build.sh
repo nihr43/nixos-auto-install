@@ -6,3 +6,5 @@ cd /root/
 nix-build
 mv result/iso/*.iso nixos.iso
 rm -rf ./result
+chown nobody:nobody nixos.iso
+chmod 666 nixos.iso
