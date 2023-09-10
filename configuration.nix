@@ -3,15 +3,21 @@
 		<nixpkgs/nixos/modules/profiles/all-hardware.nix>
 		<nixpkgs/nixos/modules/profiles/base.nix>
 		#installer-only ./hardware-configuration.nix
+		./ssh-keys.nix
 	];
         boot.loader.grub.devices = ["/dev/sda"];
 	nixpkgs.config.allowUnfree = true;
 	security.sudo.wheelNeedsPassword = false;
 
-	networking.hostName = "install";
+	networking.hostName = "unprovisioned";
+	networking.nameservers = ["1.1.1.1"];
 
-	services.openssh.enable = true;
-	services.openssh.settings.PermitRootLogin = "yes";
+	services.openssh = {
+		enable = true;
+		settings.PasswordAuthentication = false;
+		settings.KbdInteractiveAuthentication = false;
+		settings.PermitRootLogin = "yes";
+	};
 
 	users.mutableUsers = false;
 	users.users.root = {
@@ -21,5 +27,7 @@
 
 	environment.systemPackages = with pkgs; [
 		coreutils
+		htop
+		python3
 	];
 }

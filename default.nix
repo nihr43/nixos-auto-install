@@ -17,20 +17,21 @@
 					set -eux
 					wipefs -a /dev/sda
 					parted /dev/sda -- mklabel msdos
-					parted /dev/sda -- mkpart primary 1MB 100%
+					parted /dev/sda -- mkpart primary 4MB 100%
 					parted /dev/sda -- set 1 boot on
 					mkfs.ext4 -L nixos /dev/sda1
+					sync
 					mount /dev/disk/by-label/nixos /mnt
 					install -D ${./configuration.nix} /mnt/etc/nixos/configuration.nix
 					install -D ${./hardware-configuration.nix} /mnt/etc/nixos/hardware-configuration.nix
+                                        install -D ${./ssh-keys.nix} /mnt/etc/nixos/ssh-keys.nix
 					sed -i -E 's/(\w*)#installer-only /\1/' /mnt/etc/nixos/*
 
 					${config.system.build.nixos-install}/bin/nixos-install \
 						--no-root-passwd \
 						--cores 0
 
-					echo 'Shutting off in 1min'
-					${systemd}/bin/shutdown +1
+					${systemd}/bin/shutdown -r now
 				'';
 				environment = config.nix.envVars // {
 					inherit (config.environment.sessionVariables) NIX_PATH;
