@@ -26,8 +26,6 @@
 	};
 
 	environment.systemPackages = with pkgs; [
-		coreutils
-		htop
 		python3
 	];
 }
