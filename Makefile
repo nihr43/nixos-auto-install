@@ -1,5 +1,5 @@
 nixos.iso:
-	docker run --rm -it -v $$(pwd):/root/ nixos/nix /root/build.sh
+	docker run --rm -it -v $$(pwd):/tmp/ nixos/nix:2.17.1 /tmp/build.sh
 
 qemu: nixos.iso
 	fallocate -l 4g /dev/shm/disk.img
