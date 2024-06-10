@@ -1,6 +1,6 @@
 #!/bin/sh
 
-nix-channel --add https://nixos.org/channels/nixpkgs-unstable
+nix-channel --add https://nixos.org/channels/nixos-24.05 nixos
 nix-channel --update
 cd /tmp/
 nix-build
