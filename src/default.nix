@@ -28,7 +28,7 @@
                                         install -D ${./ssh-keys.nix} /mnt/etc/nixos/ssh-keys.nix
 					sed -i -E 's/(\w*)#installer-only /\1/' /mnt/etc/nixos/*
 
-                                        sleep 10
+                                        while ! ping -c 1 -W 1 8.8.8.8; do sleep 1; done
                                         nix-channel --add https://nixos.org/channels/nixos-24.11 nixos
                                         nix-channel --update
 					${config.system.build.nixos-install}/bin/nixos-install \
