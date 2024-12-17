@@ -15,3 +15,7 @@ k8s:
   root_partition: /dev/nvme0n1p1
   grub_device: /dev/nvme0n1
   root_size: 100GB
+
+qemu:
+  root_device: /dev/sda
+  root_size: 100%
