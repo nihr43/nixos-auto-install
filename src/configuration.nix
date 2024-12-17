@@ -5,7 +5,7 @@
 		#installer-only ./hardware-configuration.nix
 		./ssh-keys.nix
 	];
-        boot.loader.grub.devices = ["/dev/sda"];
+        boot.loader.grub.devices = ["{{vals.grub_device}}"];
 	nixpkgs.config.allowUnfree = true;
 	security.sudo.wheelNeedsPassword = false;
 

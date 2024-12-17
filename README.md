@@ -1,8 +1,6 @@
 # nixos-auto-install
 
-Build a self-installing [NixOS](https://nixos.org/) iso.
-
-Included makefile has target `nixos.iso` for building the iso in docker, `qemu` for testing in a kvm vm.
+Builds a batch of self-installing [NixOS](https://nixos.org/) isos using values from `config.yaml`.
 
 See `ssh-keys.nix` for landing a root ssh key.
 
