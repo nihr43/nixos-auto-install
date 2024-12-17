@@ -21,6 +21,7 @@
 					parted {{vals.root_device}} -- set 1 boot on
 					mkfs.ext4 -L nixos {{vals.root_partition}}
 					sync
+                                        sleep 10 # mkfs is asynchronous! :(
 					mount /dev/disk/by-label/nixos /mnt
 					install -D ${./configuration.nix} /mnt/etc/nixos/configuration.nix
 					install -D ${./hardware-configuration.nix} /mnt/etc/nixos/hardware-configuration.nix
