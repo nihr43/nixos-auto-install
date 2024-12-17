@@ -10,6 +10,8 @@ Edit `config.yaml` and run `just` on nixos.
 
 `root_size` is expected to be some value that `parted` will understand (GB, %).
 
+See also `just test` to build and run in qemu.
+
 ---
 
 Forked from [kevincox/nixos-auto-install](https://gitlab.com/kevincox/nixos-auto-install).
