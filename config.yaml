@@ -1,4 +1,4 @@
-sda-100:
+sda-standard:
   root_device: /dev/sda
   root_size: 100%
 
