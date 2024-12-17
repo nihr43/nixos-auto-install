@@ -1,19 +1,9 @@
-datto:
+sda-100:
   root_device: /dev/sda
-  root_partition: /dev/sda1
-  grub_device: /dev/sda
-  root_size: 100%
-
-lanner:
-  root_device: /dev/sda
-  root_partition: /dev/sda1
-  grub_device: /dev/sda
   root_size: 100%
 
 k8s:
   root_device: /dev/nvme0n1
-  root_partition: /dev/nvme0n1p1
-  grub_device: /dev/nvme0n1
   root_size: 100GB
 
 qemu:

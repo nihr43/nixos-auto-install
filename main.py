@@ -6,12 +6,19 @@ from jinja2 import Environment, FileSystemLoader
 
 
 class iso_profile:
-    def __init__(self, name, root_device, root_partition, grub_device, root_size):
+    def __init__(self, name, root_device, root_size):
         self.name = name
         self.root_device = root_device
-        self.root_partition = root_partition
-        self.grub_device = grub_device
+        self.grub_device = root_device
         self.root_size = root_size
+
+        # /dev/sda1 or /dev/nvme0n1p1
+        if self.root_device.endswith("da"):
+            self.root_partition = f"{self.root_device}1"
+        elif self.root_device.endswith("n1"):
+            self.root_partition = f"{self.root_device}p1"
+        else:
+            raise ValueError("unable to determine root_partition")
 
     def build(self):
         print(f"building {self.name}")
@@ -49,8 +56,6 @@ def main():
             profile = iso_profile(
                 profile_name,
                 values["root_device"],
-                values["root_partition"],
-                values["grub_device"],
                 values["root_size"],
             )
             profile.build()
