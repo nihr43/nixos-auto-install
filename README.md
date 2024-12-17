@@ -4,6 +4,10 @@ Builds a batch of self-installing [NixOS](https://nixos.org/) isos using values 
 
 See `ssh-keys.nix` for landing a root ssh key.
 
+## usage
+
+Run `just` on nixos.
+
 ---
 
 Forked from [kevincox/nixos-auto-install](https://gitlab.com/kevincox/nixos-auto-install).
