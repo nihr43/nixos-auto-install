@@ -33,6 +33,7 @@ class iso_profile:
         result = subprocess.run(f"cp result/iso/*.iso {self.name}.iso", shell=True)
         if result.returncode != 0:
             raise ValueError
+        os.chmod(f"{self.name}.iso", 0o644)
         print(f"{self.name} finished")
 
 
