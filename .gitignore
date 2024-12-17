@@ -1,3 +1,4 @@
 result*
 *.iso
 artifacts/
+qemu.img
