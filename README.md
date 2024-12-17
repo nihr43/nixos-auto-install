@@ -6,7 +6,7 @@ See `ssh-keys.nix` for landing a root ssh key.
 
 ## usage
 
-Run `just` on nixos.
+Edit `config.yaml` and run `just` on nixos.
 
 ---
 
