@@ -35,7 +35,7 @@
 						--no-root-passwd \
 						--cores 0
 
-					${systemd}/bin/shutdown -r now
+					systemctl poweroff
 				'';
 				environment = config.nix.envVars // {
 					inherit (config.environment.sessionVariables) NIX_PATH;
