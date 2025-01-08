@@ -20,9 +20,9 @@ class iso_profile:
             pass
 
         # /dev/sda1 or /dev/nvme0n1p1
-        if self.root_device.endswith("da"):
+        if self.root_device.startswith("/dev/sd"):
             self.root_partition = f"{self.root_device}1"
-        elif self.root_device.endswith("n1"):
+        elif self.root_device.startswith("/dev/nvme"):
             self.root_partition = f"{self.root_device}p1"
         else:
             raise ValueError("unable to determine root_partition")
