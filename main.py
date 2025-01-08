@@ -6,11 +6,18 @@ from jinja2 import Environment, FileSystemLoader
 
 
 class iso_profile:
-    def __init__(self, name, root_device, root_size):
+    def __init__(self, name, values):
+        """
+        values is dict from config.yaml
+        """
         self.name = name
-        self.root_device = root_device
-        self.grub_device = root_device
-        self.root_size = root_size
+        self.root_device = values["root_device"]
+        self.grub_device = self.root_device
+        self.root_size = values["root_size"]
+        try:
+            self.serial = values["serial"]
+        except KeyError:
+            pass
 
         # /dev/sda1 or /dev/nvme0n1p1
         if self.root_device.endswith("da"):

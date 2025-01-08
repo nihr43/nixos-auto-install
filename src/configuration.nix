@@ -9,6 +9,9 @@
 
   networking.hostName = "unprovisioned";
   networking.nameservers = ["1.1.1.1"];
+{% if vals.serial %}
+  boot.kernelParams = [ "console=ttyS0,115200n8" ];
+{% endif %}
 
   services.openssh = {
     enable = true;
