@@ -33,7 +33,7 @@ class iso_profile:
         env = Environment(loader=file_loader)
         for f in os.listdir("src"):
             file_path = os.path.join("src", f)
-            if os.path.isfile(file_path):
+            if os.path.isfile(file_path) and file_path.endswith(".nix"):
                 template = env.get_template(f)
                 output = template.render(vals=self)
                 output_file_path = f"artifacts/{f}"
