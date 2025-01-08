@@ -43,6 +43,8 @@ class iso_profile:
             ["nix-build", "artifacts"], capture_output=True, text=True
         )
         if result.returncode != 0:
+            print(result.stdout)
+            print(result.stderr)
             raise ValueError
         result = subprocess.run(f"cp result/iso/*.iso {self.name}.iso", shell=True)
         if result.returncode != 0:
@@ -60,11 +62,7 @@ def main():
     with open("config.yaml", "r") as f:
         yam = yaml.safe_load(f)
         for profile_name, values in yam.items():
-            profile = iso_profile(
-                profile_name,
-                values["root_device"],
-                values["root_size"],
-            )
+            profile = iso_profile(profile_name, values)
             profile.build()
 
 
